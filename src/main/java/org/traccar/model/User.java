@@ -320,4 +320,13 @@ public class User extends ExtendedModel implements UserRestrictions, Disableable
         return thisAttributes.equals(otherAttributes);
     }
 
+    long roleId;
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
+    }
 }

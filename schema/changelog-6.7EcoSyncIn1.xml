@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+  logicalFilePath="changelog-6.7EcoSyncIn1">
+
+  <changeSet author="author" id="changelog-6.7EcoSyncIn1">
+    <createTable tableName="tc_alarmtypes">
+      <column name="id"
+              type="INT"
+              autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="type" type="VARCHAR(64)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="tc_audittrails">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="createdon"
+              type="TIMESTAMP"
+              defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="userid" type="INT" />
+      <column name="username" type="VARCHAR(128)" />
+      <column name="component" type="VARCHAR(128)" />
+      <column name="activity" type="VARCHAR(128)" />
+      <column name="statuscode" type="VARCHAR(128)" />
+      <column name="platform" type="VARCHAR(128)" />
+      <column name="description" type="VARCHAR(500)" />
+      <column name="ipaddress" type="VARCHAR(50)" />
+    </createTable>
+
+    <createTable tableName="tc_devicelogs">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="deviceid" type="INT" />
+      <column name="hexcode" type="VARCHAR(4000)" />
+      <column name="content" type="VARCHAR(512)" />
+      <column name="createdOn" type="TIMESTAMP" />
+      <column name="ip" type="VARCHAR(32)" />
+      <column name="fixtime" type="TIMESTAMP" />
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_devicelogs"
+                             baseColumnNames="deviceid"
+                             constraintName="fk_device_deviceid"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_devices" />
+
+    <createTable tableName="tc_password_history">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="userid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="hashedpassword" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdon" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP" />
+    </createTable>
+
+    <createIndex tableName="tc_password_history" indexName="idx_tc_password_history_user_id">
+      <column name="userid" />
+    </createIndex>
+    <addForeignKeyConstraint baseTableName="tc_password_history"
+                             baseColumnNames="userid"
+                             constraintName="fk_password_history_users_id_id"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_users" />
+
+
+    <createTable tableName="tc_states">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(32)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="tc_tokens">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="userid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="usertoken" type="VARCHAR(64)">
+        <constraints nullable="false" />
+      </column>
+      <column name="islogin" type="BOOLEAN" />
+      <column name="isthirdparty" type="BOOLEAN" />
+      <column name="createdon" type="TIMESTAMP" />
+      <column name="disabled" type="BOOLEAN" />
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_tokens"
+                             baseColumnNames="userid"
+                             constraintName="fk_token_userid"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_users" />
+
+    <createTable tableName="tc_uiconfigs">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+
+      <column name="uikey" type="VARCHAR(64)">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="configurations"
+              type="VARCHAR(4000)">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdon"
+              type="TIMESTAMP"
+              defaultValueComputed="CURRENT_TIMESTAMP" >
+      </column>
+      <column name="lastupdate"
+              type="TIMESTAMP" >
+      </column>
+    </createTable>
+    <addUniqueConstraint tableName="tc_uiconfigs" columnNames="uikey" constraintName="uk_tc_uiconfigs_uikey" />
+
+    <createTable tableName="tc_userroles">
+      <column name="id"
+              type="INT"
+              autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(50)" defaultValue="null" />
+      <column name="roles"
+              type="VARCHAR(4000)">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdon" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="lastupdate" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP" />
+    </createTable>
+
+    <createTable tableName="tc_user_userrole">
+      <column name="userid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="userroleid" type="INT">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addColumn tableName="tc_users">
+      <column name="roleid" type="INT" />
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="tc_users"
+                             baseColumnNames="roleid"
+                             constraintName="fk_users_roleid"
+                             referencedTableName="tc_userroles"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+    <addForeignKeyConstraint baseTableName="tc_user_userrole"
+                             baseColumnNames="userid"
+                             constraintName="fk_user_userrole_userid"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_users" />
+    <addForeignKeyConstraint baseTableName="tc_user_userrole"
+                             baseColumnNames="userroleid"
+                             constraintName="fk_user_userrole_userroleid"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_userroles" />
+
+
+    <createTable tableName="tc_notificationtypes">
+      <column name="id"
+              type="INT"
+              autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="nid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="type" type="VARCHAR(64)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="tc_eventnotificationlogs">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="userid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="deviceid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="alerttype" type="VARCHAR(64)" />
+      <column name="eventtime" type="TIMESTAMP" />
+      <column name="positionid" type="INT">
+        <constraints nullable="true" />
+      </column>
+      <column name="latitude" type="DOUBLE" />
+      <column name="longitude" type="DOUBLE" />
+      <column name="altitude" type="DOUBLE" />
+      <column name="start_time" type="TIMESTAMP" />
+      <column name="start_lat" type="DOUBLE" />
+      <column name="start_lng" type="DOUBLE" />
+      <column name="status" type="VARCHAR(64)" />
+      <column name="notificator_type" type="VARCHAR(32)" />
+      <column name="attributes" type="VARCHAR(4000)" />
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_eventnotificationlogs"
+                             baseColumnNames="deviceid"
+                             constraintName="fk_tc_eventnotificationlog_deviceid"
+                             onDelete="CASCADE"
+                             referencedColumnNames="id"
+                             referencedTableName="tc_devices"/>
+  </changeSet>
+
+</databaseChangeLog>
