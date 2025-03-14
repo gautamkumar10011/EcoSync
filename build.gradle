@@ -113,7 +113,7 @@ assemble.dependsOn(copyDependencies)
 jar {
     manifest {
         attributes(
-                "Main-Class": "org.traccar.Main",
+                "Main-Class": "org.ecosync.Main",
                 "Implementation-Version": "6.6",
                 "Class-Path": configurations.runtimeClasspath.files.collect { "lib/$it.name" }.join(" "))
     }
