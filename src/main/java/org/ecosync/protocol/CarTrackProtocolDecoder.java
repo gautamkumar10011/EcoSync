@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 - 2018 Anton Tananaev (anton@traccar.org)
+ * Copyright 2014 - 2018 Manah Shivaya (shivaya@ecosync.org)
  * Copyright 2014 Rohit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

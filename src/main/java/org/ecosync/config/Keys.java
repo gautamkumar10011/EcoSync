@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2024 Anton Tananaev (anton@traccar.org)
+ * Copyright 2019 - 2024 Manah Shivaya (shivaya@ecosync.org)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1988,4 +1988,17 @@ public final class Keys {
             "broadcast.secondary",
             List.of(KeyType.CONFIG));
 
+    /**
+     * enable writing error log file writing.
+     */
+    public static final ConfigKey<String> ERROR_LOGGER_ENABLE = new StringConfigKey(
+            "error.logger.enable",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * List of the module in which, we can write error logs.
+     */
+    public static final ConfigKey<String> ERROR_LOGGER_MODULE_LIST = new StringConfigKey(
+            "error.logger.module.list",
+            List.of(KeyType.CONFIG));
 }

@@ -1,25 +1,25 @@
 openapi: 3.1.0
 info:
-  title: echsync
-  description: echsync GPS tracking server API documentation. To use the API you need to have a server instance. For testing purposes you can use one of free [demo servers](https://www.echsync.org/demo-server/). For production use you can install your own server or get a [subscription service](https://www.echsync.org/product/tracking-server/).
+  title: ecosync
+  description: ecosync GPS tracking server API documentation. To use the API you need to have a server instance. For testing purposes you can use one of free [demo servers](https://www.ecosync.org/demo-server/). For production use you can install your own server or get a [subscription service](https://www.ecosync.org/product/tracking-server/).
   contact:
-    name: echsync Support
-    url: https://www.echsync.org/
-    email: support@echsync.org
+    name: ecosync Support
+    url: https://www.ecosync.org/
+    email: support@ecosync.org
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: '6.6'
 servers:
-  - url: https://www.echsync.org/api
+  - url: https://www.ecosync.org/api
     description: Demo Server 1
-  - url: https://demo2.echsync.org/api
+  - url: https://demo2.ecosync.org/api
     description: Demo Server 2
-  - url: https://demo3.echsync.org/api
+  - url: https://demo3.ecosync.org/api
     description: Demo Server 3
-  - url: https://demo4.echsync.org/api
+  - url: https://demo4.ecosync.org/api
     description: Demo Server 4
-  - url: https://server.echsync.org/api
+  - url: https://server.ecosync.org/api
     description: Subscription Server
   - url: http://{host}:{port}/api
     description: Other Server
@@ -514,8 +514,8 @@ paths:
     get:
       summary: Fetches a list of Positions
       description: >-
-        We strongly recommend using [echsync WebSocket
-        API](https://www.echsync.org/echsync-api/) instead of periodically
+        We strongly recommend using [ecosync WebSocket
+        API](https://www.ecosync.org/ecosync-api/) instead of periodically
         polling positions endpoint. Without any params, it returns a list of
         last known positions for all the user's Devices. _from_ and _to_ fields
         are not required with _id_.

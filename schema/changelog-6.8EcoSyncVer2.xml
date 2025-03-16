@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+  logicalFilePath="changelog-6.7EcoSyncIn1">
+
+  <changeSet author="author" id="changelog-6.7EcoSyncIn1">
+    <createTable tableName="tc_regions">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="stateid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdby" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdat" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_regions"
+                             baseColumnNames="createdby"
+                             constraintName="fk_regions_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <createTable tableName="tc_districts">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="regionid" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdby" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdat" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_districts"
+                             baseColumnNames="createdby"
+                             constraintName="fk_districts_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <createTable tableName="tc_industrytypes">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="description" type="TEXT">
+        <constraints nullable="true" />
+      </column>
+      <column name="createdby" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdat" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_industrytypes"
+                             baseColumnNames="createdby"
+                             constraintName="fk_industrytype_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <!--        tc_tickets table created-->
+    <createTable tableName="tc_tickets">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="ticketid" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="requesttype" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="modulename" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="subject" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="description" type="VARCHAR(512)">
+        <constraints nullable="false" />
+      </column>
+      <column name="mobileno" type="VARCHAR(16)">
+        <constraints nullable="false" />
+      </column>
+      <column name="image" type="VARCHAR(1024)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="status" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="createdby" type="INT" />
+      <column name="assignedto" type="INT" />
+      <column name="createdon" type="TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+      <column name="updateon" type="TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="tc_tickets"
+                             baseColumnNames="createdby"
+                             constraintName="fk_tickets_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addForeignKeyConstraint baseTableName="tc_tickets"
+                             baseColumnNames="assignedto"
+                             constraintName="fk_tickets_assignedto"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <createTable tableName="tc_requesttypes">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="tc_modulenames">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="tc_ticketstatuss">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="name" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addUniqueConstraint tableName="tc_modulenames" columnNames="name" constraintName="uk_modulename_name" />
+    <addUniqueConstraint tableName="tc_requesttypes" columnNames="name" constraintName="uk_requesttype_name" />
+    <addUniqueConstraint tableName="tc_ticketstatuss" columnNames="name" constraintName="uk_ticketstatus_name" />
+
+    <createTable tableName="tc_errorlogs">
+      <column name="id" type="INT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+      <column name="component" type="VARCHAR(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="errmessage" type="TEXT">
+        <constraints nullable="false" />
+      </column>
+      <column name="solutiondesc" type="TEXT">
+        <constraints nullable="true" />
+      </column>
+      <!--            As this component is called by netty part as well so no forien key relation -->
+      <column name="createdby" type="INT" >
+        <constraints nullable="true" />
+      </column>
+      <column name="deviceid" type="INT" >
+        <constraints nullable="true" />
+      </column>
+      <column name="createdon" type="TIMESTAMP"
+              defaultValueComputed="CURRENT_TIMESTAMP"/>
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

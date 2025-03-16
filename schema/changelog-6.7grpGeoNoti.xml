@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+  logicalFilePath="changelog-6.7EcoSyncIn1">
+
+  <changeSet author="author" id="changelog-6.7EcoSyncIn1">
+    <addColumn tableName="tc_groups">
+      <column name="createdon" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="lastupdate" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="createdby" type="INT"/>
+      <column name="modifiedby" type="INT"/>
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="tc_groups"
+                             baseColumnNames="createdby"
+                             constraintName="fk_group_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addForeignKeyConstraint baseTableName="tc_groups"
+                             baseColumnNames="modifiedby"
+                             constraintName="fk_group_modifiedby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addColumn tableName="tc_geofences">
+      <column name="createdon" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="lastupdate" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="createdby" type="INT"/>
+      <column name="modifiedby" type="INT"/>
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="tc_geofences"
+                             baseColumnNames="createdby"
+                             constraintName="fk_geofence_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addForeignKeyConstraint baseTableName="tc_geofences"
+                             baseColumnNames="modifiedby"
+                             constraintName="fk_geofence_modifiedby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addColumn tableName="tc_notifications">
+      <column name="createdon" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="lastupdate" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+      <column name="createdby" type="INT"/>
+      <column name="modifiedby" type="INT"/>
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="tc_notifications"
+                             baseColumnNames="createdby"
+                             constraintName="fk_notification_createdby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+
+    <addForeignKeyConstraint baseTableName="tc_notifications"
+                             baseColumnNames="modifiedby"
+                             constraintName="fk_notification_modifiedby"
+                             referencedTableName="tc_users"
+                             referencedColumnNames="id"
+                             onDelete="CASCADE" />
+  </changeSet>
+
+</databaseChangeLog>
